@@ -4,6 +4,7 @@ import apiClient from "../services/axiosInstance.ts";
 
 const Location = () => {
     const [location, setLocation] = useState('');
+    const [content, setContent] = useState('');
     const {id} = useParams();
 
     useEffect(() => {
@@ -19,6 +20,26 @@ const Location = () => {
         }
         fetchData();
     }, [id]);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const data = {
+            content: content,
+            location_id: Number(id)
+        }
+
+        console.log(data);
+
+        try {
+            const res = await apiClient.post('/comments', data);
+            console.log(res);
+
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
 
     return (
       <>
@@ -37,10 +58,13 @@ const Location = () => {
           </div>
           <hr />
           <h2>Komentarji:</h2>
-          <form>
-              <input type='text' />
+          <form onSubmit={handleSubmit}>
+              <input type='text' value={content}
+                     onChange={(e) => setContent(e.target.value)} />
               <input type='submit' />
           </form>
+
+
       </>
   )
 }
