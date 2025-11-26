@@ -1,10 +1,12 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
 import type {LoginData} from "../interfaces/LoginData.ts";
+import apiClient from "../services/axiosInstance.ts";
+import {useAuth} from "../context/AuthContext.tsx";
 
 const Login = () => {
     const navigate = useNavigate();
+    const {login} = useAuth();
 
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
@@ -18,9 +20,12 @@ const Login = () => {
         }
 
         try {
-            const res = await axios.post('http://localhost:3000/auth/login', data);
+            const res = await apiClient.post('/auth/login', data);
 
-            if (res.status === 200 || res.status === 201) {
+            console.log(res.data);
+
+            if (res.data && res.data.access_token) {
+                login(res.data.access_token);
                 alert("Uspešno");
                 navigate('/');
             }

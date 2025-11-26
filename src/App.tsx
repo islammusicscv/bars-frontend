@@ -5,20 +5,23 @@ import Home from "./pages/Home.tsx";
 import Location from "./pages/Location.tsx";
 import Login from "./pages/Login.tsx";
 import Register from "./pages/Register.tsx";
+import {AuthProvider} from "./context/AuthContext.tsx";
 
 function App() {
 
 
   return (
       <>
-        <Layout>
-            <Routes>
-                <Route path="/" element={<Home/>} />
-                <Route path="/locations" element={<Location/>} />
-                <Route path="/login" element={<Login/>} />
-                <Route path="/register" element={<Register/>} />
-            </Routes>
-        </Layout>
+        <AuthProvider>
+            <Layout>
+                <Routes>
+                    <Route path="/" element={<Home/>} />
+                    <Route path="/locations" element={<Location/>} />
+                    <Route path="/login" element={<Login/>} />
+                    <Route path="/register" element={<Register/>} />
+                </Routes>
+            </Layout>
+        </AuthProvider>
       </>
   )
   }
