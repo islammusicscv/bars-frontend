@@ -1,24 +1,39 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import apiClient from "../services/axiosInstance.ts";
+import axios from "axios";
+import Card from "../components/Card.tsx";
+import CardComment from "../components/CardComment.tsx";
 
 const Location = () => {
     const [location, setLocation] = useState('');
     const [content, setContent] = useState('');
+    const [comments, setComments] = useState([]);
     const {id} = useParams();
 
-    useEffect(() => {
-        const fetchData =  async () => {
-            try {
-                const res = await apiClient.get(`/locations/${id}`);
-                setLocation(res.data);
-                //console.log(res.data);
-            }
-            catch (err) {
-                console.log(err);
-            }
+    const getComments = async () => {
+        const res = await apiClient.get(`/comments/location/${id}`);
+
+        if (res.status === 200) {
+            setComments(res.data);
+            console.log(res.data);
         }
+    }
+
+    const fetchData =  async () => {
+        try {
+            const res = await apiClient.get(`/locations/${id}`);
+            setLocation(res.data);
+            //console.log(res.data);
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
+    useEffect(() => {
         fetchData();
+        getComments();
     }, [id]);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -63,7 +78,10 @@ const Location = () => {
                      onChange={(e) => setContent(e.target.value)} />
               <input type='submit' />
           </form>
-
+          <hr />
+          {comments.map((comment)=>(
+              <CardComment key={comment.id} comment={comment.content, comment.createdAt}/>
+          ))}
 
       </>
   )
