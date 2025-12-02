@@ -13,12 +13,12 @@ apiClient.interceptors.request.use(
     (config) => {
         // Preberemo token iz localStorage
         const token = localStorage.getItem('token');
-        
+
         // Če token obstaja, ga dodamo v header
         if (token) {
             config.headers['Authorization'] = `Bearer ${token}`;
         }
-        
+
         return config;
     },
     (error) => {
