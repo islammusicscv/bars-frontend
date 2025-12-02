@@ -10,7 +10,7 @@ const CardComment = ({content, createdAt}: Props) => {
           <div>
               {content}
           </div>
-          <h6>{createdAt}</h6>
+          <h6>{createdAt.toString()}</h6>
       </>
   )
 }

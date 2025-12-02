@@ -36,29 +36,39 @@ const Login = () => {
     }
 
     return (
-      <>
-          <form onSubmit={handleSubmit}>
-              <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
+        <>
+        <div className="container mt-5">
+            <div className="row justify-content-center">
+                <div className="col-12 col-md-6 col-lg-4">
+                    <div className="card shadow-sm border-0 rounded-3">
+                        <div className="card-body p-4">
+                            <form onSubmit={handleSubmit}>
+                                <h1 className="h3 mb-4 fw-normal text-center">Prijava</h1>
 
-              <div className="form-floating">
-                  <input type="email" className="form-control" id="floatingInput"
-                         placeholder="name@example.com"
-                         value={email}
-                         onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <label htmlFor="floatingInput">Email address</label>
-              </div>
-              <div className="form-floating">
-                  <input type="password" className="form-control" id="floatingPassword"
-                         placeholder="Password"
-                         value={pass}
-                         onChange={(e) => setPass(e.target.value)}
-                  />
-                  <label htmlFor="floatingPassword">Password</label>
-              </div>
-              <button className="btn btn-primary w-100 py-2" type="submit">Register</button>
-          </form>
-      </>
-  )
+                                <div className="form-floating mb-3">
+                                    <input type="email" className="form-control" id="floatingInput"
+                                           placeholder="name@example.com"
+                                           value={email}
+                                           onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                    <label htmlFor="floatingInput">E-poštni naslov</label>
+                                </div>
+                                <div className="form-floating mb-3">
+                                    <input type="password" className="form-control" id="floatingPassword"
+                                           placeholder="Password"
+                                           value={pass}
+                                           onChange={(e) => setPass(e.target.value)}
+                                    />
+                                    <label htmlFor="floatingPassword">Geslo</label>
+                                </div>
+                                <button className="btn btn-primary w-100 py-2 mt-2" type="submit">Prijava</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </>
+    )
 }
 export default Login;

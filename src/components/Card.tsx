@@ -1,4 +1,4 @@
-import type {Location} from '../interfaces/location.ts';
+import type {Location} from '../interfaces/Location.ts';
 
 interface Props {
     location: Location;

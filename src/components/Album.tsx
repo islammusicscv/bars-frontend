@@ -1,6 +1,6 @@
 import Card from "./Card.tsx";
 import {useEffect, useState} from "react";
-import type {Location} from '../interfaces/location.ts';
+import type {Location} from '../interfaces/Location.ts';
 import axios from "axios";
 
 const Album = () => {
