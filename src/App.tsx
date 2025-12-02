@@ -6,6 +6,7 @@ import Location from "./pages/Location.tsx";
 import Login from "./pages/Login.tsx";
 import Register from "./pages/Register.tsx";
 import {AuthProvider} from "./context/AuthContext.tsx";
+import LocationAdd from "./pages/LocationAdd.tsx";
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home/>} />
                     <Route path="/locations/:id" element={<Location/>} />
+                    <Route path="/add-location" element={<LocationAdd/>} />
                     <Route path="/login" element={<Login/>} />
                     <Route path="/register" element={<Register/>} />
                 </Routes>

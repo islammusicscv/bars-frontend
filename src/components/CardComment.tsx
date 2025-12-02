@@ -6,7 +6,6 @@ interface Props {
 const CardComment = ({content, createdAt}: Props) => {
   return (
       <>
-          <div> VSŠ je zakon</div>
           <div>
               {content}
           </div>

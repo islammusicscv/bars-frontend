@@ -47,7 +47,7 @@ const Header = () => {
                             <h4>Meni</h4>
                             <ul className="list-unstyled">
                                 <li><Link to='/' className="text-white text-decoration-none">Domov</Link></li>
-                                <li><Link to='/locations' className="text-white text-decoration-none">Lokacije</Link></li>
+                                <li><Link to='/add-location' className="text-white text-decoration-none">Dodaj lokacijo</Link></li>
                                 {!isAuthenticated ? (
                                     <>
                                         <li><Link to='/register' className="text-white text-decoration-none">Registracija</Link></li>

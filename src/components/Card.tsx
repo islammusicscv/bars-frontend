@@ -1,4 +1,5 @@
 import type {Location} from '../interfaces/Location.ts';
+import {Link} from "react-router-dom";
 
 interface Props {
     location: Location;
@@ -18,8 +19,9 @@ const Card = ({location}: Props) => {
                   <div className="card-body"><p className="card-text">{location.title}</p>
                       <div className="d-flex justify-content-between align-items-center">
                           <div className="btn-group">
-                              <button type="button" className="btn btn-sm btn-outline-secondary">View
-                              </button>
+                              <Link to={`/locations/${location.id}`} className="btn btn-sm btn-outline-secondary">
+                                  View
+                              </Link>
                               <button type="button" className="btn btn-sm btn-outline-secondary">Edit
                               </button>
                           </div>
