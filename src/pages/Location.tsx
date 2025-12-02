@@ -15,6 +15,7 @@ const Location = () => {
             const res = await apiClient.get<Comment[]>(`/comments/location/${id}`);
             if (res.status === 200) {
                 setComments(res.data);
+                console.log(res.data);
             }
         } catch (err) {
             console.error("Error fetching comments:", err);
@@ -125,6 +126,7 @@ const Location = () => {
                                         key={comment.id}
                                         content={comment.content}
                                         createdAt={comment.createdAt}
+                                        user={comment.user}
                                     />
                                 ))
                             ) : (
