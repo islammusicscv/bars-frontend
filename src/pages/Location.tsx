@@ -196,9 +196,12 @@ const Location = () => {
                                 comments.map((comment) => (
                                     <CardComment
                                         key={comment.id}
+                                        id={comment.id}
                                         content={comment.content}
                                         createdAt={comment.createdAt}
                                         user={comment.user}
+                                        currentUserId={userId}
+                                        onDelete={getComments} // osveži seznam komentarja po brisanju
                                     />
                                 ))
                             ) : (
