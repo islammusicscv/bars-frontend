@@ -1,73 +1,73 @@
-# React + TypeScript + Vite
+# 🎨 Bars Frontend (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend del aplikacije VSŠ Album, zgrajen s knjižnico React in orodjem Vite. Aplikacija omogoča interakcijo z backend API-jem za upravljanje lokacij, komentarjev in uporabniških računov.
 
-Currently, two official plugins are available:
+## 🚀 Funkcionalnosti
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Avtentikacija
+- Prijava in registracija uporabnikov.
+- Shranjevanje JWT žetona v `localStorage`.
+- Zaščitene poti (samo za prijavljene uporabnike).
 
-## React Compiler
+### Lokacije
+- Prikaz seznama vseh lokacij na domači strani (kartice s slikami).
+- Podroben ogled posamezne lokacije z galerijo slik (carousel).
+- Dodajanje novih lokacij (vključno z nalaganjem več slik hkrati).
+- Urejanje in brisanje lokacij (vidno samo lastniku).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Komentarji
+- Prikaz komentarjev na strani lokacije.
+- Dodajanje novih komentarjev.
+- Brisanje lastnih komentarjev.
 
-## Expanding the ESLint configuration
+### Uporabniški vmesnik
+- Odziven dizajn (uporaba Bootstrap 5).
+- Dinamična navigacija (prikaz povezav glede na status prijave).
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Tehnologije
+- **React:** Knjižnica za gradnjo uporabniških vmesnikov.
+- **Vite:** Orodje za hiter razvoj in gradnjo.
+- **React Router:** Upravljanje navigacije in poti.
+- **Axios:** HTTP klient za komunikacijo z API-jem.
+- **Bootstrap 5:** CSS ogrodje za stiliziranje.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📦 Namestitev in Zagon
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Predpogoji
+- Node.js (verzija 16 ali novejša)
+- Delujoč Bars Backend (mora teči na portu 3000 ali ustrezno konfiguriran).
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 1. Kloniranje repozitorija
+```bash
+git clone <URL_TVOJEGA_REPOZITORIJA>
+cd bars-frontend
+```
+### 2. Namestitev odvisnosti
+```bash
+npm install
+```
+### 3. Zagon aplikacije
+```bash
+npm run dev
+```
+Aplikacija bo privzeto dosegljiva na `http://localhost:5173`.
+
+## 📂 Struktura Projekta
+
+```text
+src/
+├── components/       # Reusable komponente (Card, Header, Footer...)
+├── context/          # React Context (AuthContext za prijavo)
+├── interfaces/       # TypeScript vmesniki (Location, User, Comment...)
+├── pages/            # Strani aplikacije (Home, Login, Location...)
+├── services/         # API servisi (axiosInstance)
+├── App.tsx           # Glavna komponenta z usmerjanjem (routing)
+└── main.tsx          # Vstopna točka aplikacije
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Ključne strani
+- **Domov (`/`):** Prikazuje album vseh lokacij.
+- **Prijava/Registracija (`/login`, `/register`):** Obrazci za avtentikacijo.
+- **Podrobnosti Lokacije (`/locations/:id`):** Prikaz podatkov, galerije in komentarjev.
+- **Dodaj Lokacijo (`/add-location`):** Obrazec za ustvarjanje nove lokacije.
+- **Uredi Lokacijo (`/locations/:id/edit`):** Obrazec za urejanje (samo za lastnike).
