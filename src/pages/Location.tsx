@@ -237,7 +237,10 @@ const Location = () => {
 
                                 {isOwner && (
                                     <>
-                                        <button className="btn btn-warning w-100">
+                                        <button
+                                            className="btn btn-warning w-100"
+                                            onClick={() => navigate(`/locations/${id}/edit`)}
+                                        >
                                             <i className="bi bi-pencil me-2"></i>Uredi
                                         </button>
                                         <button
