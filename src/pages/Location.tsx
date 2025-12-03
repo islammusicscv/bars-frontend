@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import apiClient from "../services/axiosInstance.ts";
 import CardComment from "../components/CardComment.tsx";
+import { useAuth } from "../context/AuthContext.tsx";
 
 const Location = () => {
     const [location, setLocation] = useState<Location | null>(null);
@@ -9,6 +10,8 @@ const Location = () => {
     const [comments, setComments] = useState<Comment[]>([]);
     const {id} = useParams();
     const navigate = useNavigate();
+
+    const { userId } = useAuth();
 
     const getComments = async () => {
         try {
@@ -60,12 +63,26 @@ const Location = () => {
         }
     }
 
+    const handleDelete = async () => {
+        if (confirm("Ali ste prepričani, da želite izbrisati to lokacijo?")) {
+            try {
+                await apiClient.delete(`/locations/${id}`);
+                alert("Lokacija izbrisana.");
+                navigate('/');
+            } catch (err) {
+                console.error("Napaka pri brisanju:", err);
+                alert("Napaka pri brisanju lokacije.");
+            }
+        }
+    };
+
 
     if (!location) {
         return <div className="container mt-5">Nalaganje ...</div>;
     }
 
     const hasImages = location.images && location.images.length > 0;
+    const isOwner = userId && location.user?.id === userId;
 
     return (
         <div className="container mt-5 mb-5">
@@ -217,6 +234,20 @@ const Location = () => {
                                 >
                                     ← Nazaj na seznam
                                 </button>
+
+                                {isOwner && (
+                                    <>
+                                        <button className="btn btn-warning w-100">
+                                            <i className="bi bi-pencil me-2"></i>Uredi
+                                        </button>
+                                        <button
+                                            className="btn btn-danger w-100"
+                                            onClick={handleDelete}
+                                        >
+                                            <i className="bi bi-trash me-2"></i>Izbriši
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
