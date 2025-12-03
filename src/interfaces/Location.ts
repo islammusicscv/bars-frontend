@@ -5,4 +5,8 @@ export interface Location {
     rating: number;
     address: string;
     createdAt: Date;
+    images?: Array<{
+        id: number;
+        url: string;
+    }>;
 }

@@ -6,19 +6,42 @@ interface Props {
 }
 
 const Card = ({location}: Props) => {
+
+    const getImageUrl = () => {
+        if (location.images && location.images.length > 0) {
+            return `http://localhost:3000/uploads/${location.images[0].url}`;
+        }
+        return null;
+    };
+
+    const imageUrl = getImageUrl();
+
     return (
         <div className="col">
             <div className="card shadow-sm h-100 border-0 rounded-4 overflow-hidden hover-shadow transition">
                 {/* Zgornji del s sliko in oceno */}
-                <div className="position-relative">
-                    <svg aria-label="Placeholder: Thumbnail" className="bd-placeholder-img card-img-top"
-                         height="200" preserveAspectRatio="xMidYMid slice" role="img" width="100%"
-                         xmlns="http://www.w3.org/2000/svg" style={{objectFit: 'cover'}}>
-                        <rect width="100%" height="100%" fill="#343a40"></rect>
-                        <text x="50%" y="50%" fill="#f8f9fa" dy=".3em" fontSize="2rem" textAnchor="middle" fontWeight="bold">
-                            {location.title.charAt(0).toUpperCase()}
-                        </text>
-                    </svg>
+                <div className="position-relative" style={{ height: '200px' }}>
+                    {imageUrl ? (
+                        <img
+                            src={imageUrl}
+                            className="card-img-top w-100 h-100"
+                            alt={location.title}
+                            style={{ objectFit: 'cover' }}
+                            onError={(e) => {
+                                // Fallback, če slika ne obstaja
+                                (e.target as HTMLImageElement).style.display = 'none';
+                                (e.target as HTMLImageElement).nextElementSibling?.classList.remove('d-none');
+                            }}
+                        />
+                    ) : null}
+
+                    {/* Placeholder, če slike ni ali se ne naloži */}
+                    <div className={`w-100 h-100 bg-dark d-flex align-items-center justify-content-center ${imageUrl ? 'd-none' : ''}`}>
+                      <span className="text-white fs-1 fw-bold text-uppercase">
+                          {location.title.charAt(0)}
+                      </span>
+                    </div>
+
                     <div className="position-absolute top-0 end-0 m-3">
                       <span className="badge bg-warning text-dark shadow-sm fs-6 rounded-pill px-3">
                           ★ {location.rating}

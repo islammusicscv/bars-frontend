@@ -65,16 +65,71 @@ const Location = () => {
         return <div className="container mt-5">Nalaganje ...</div>;
     }
 
+    const hasImages = location.images && location.images.length > 0;
+
     return (
         <div className="container mt-5 mb-5">
             <div className="row">
                 <div className="col-lg-8">
                     <div className="card shadow-sm mb-5 overflow-hidden border-0">
-                        <div className="bg-dark text-white d-flex align-items-center justify-content-center" style={{ height: '300px' }}>
-                            <svg className="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-                                <rect width="100%" height="100%" fill="#55595c"></rect>
-                                <text x="50%" y="50%" fill="#eceeef" dy=".3em" fontSize="2rem" textAnchor="middle">Slika lokacije</text>
-                            </svg>
+                        {/* Galerija slik ali placeholder */}
+                        <div className="bg-dark text-white d-flex align-items-center justify-content-center" style={{ minHeight: '400px', maxHeight: '500px', overflow: 'hidden' }}>
+                            {hasImages ? (
+                                <div id="carouselExampleIndicators" className="carousel slide w-100 h-100" data-bs-ride="carousel">
+                                    {/* Indikatorji (pikice spodaj), če je več slik */}
+                                    {location.images!.length > 1 && (
+                                        <div className="carousel-indicators">
+                                            {location.images!.map((_, index) => (
+                                                <button
+                                                    key={index}
+                                                    type="button"
+                                                    data-bs-target="#carouselExampleIndicators"
+                                                    data-bs-slide-to={index}
+                                                    className={index === 0 ? "active" : ""}
+                                                    aria-current={index === 0 ? "true" : "false"}
+                                                    aria-label={`Slide ${index + 1}`}
+                                                ></button>
+                                            ))}
+                                        </div>
+                                    )}
+
+                                    {/* Slike */}
+                                    <div className="carousel-inner h-100">
+                                        {location.images!.map((img, index) => (
+                                            <div key={img.id} className={`carousel-item h-100 ${index === 0 ? "active" : ""}`}>
+                                                <img
+                                                    src={`http://localhost:3000/uploads/${img.url}`}
+                                                    className="d-block w-100 h-100"
+                                                    alt={`Slika lokacije ${index + 1}`}
+                                                    style={{ objectFit: 'contain', backgroundColor: '#333' }}
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Gumbi za naprej/nazaj, če je več slik */}
+                                    {location.images!.length > 1 && (
+                                        <>
+                                            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span className="visually-hidden">Prejšnja</span>
+                                            </button>
+                                            <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                                <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span className="visually-hidden">Naslednja</span>
+                                            </button>
+                                        </>
+                                    )}
+                                </div>
+                            ) : (
+                                /* Placeholder, če ni slik */
+                                <div className="d-flex flex-column align-items-center justify-content-center w-100 h-100">
+                                    <svg className="bd-placeholder-img mb-3" width="100" height="100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                        <rect width="100%" height="100%" fill="#6c757d"></rect>
+                                    </svg>
+                                    <span className="fs-4 text-muted">Ni slike lokacije</span>
+                                </div>
+                            )}
                         </div>
 
                         <div className="card-body p-4">

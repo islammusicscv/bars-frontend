@@ -11,6 +11,15 @@ const LocationAdd = () => {
     const [address, setAddress] = useState('');
     const [rating, setRating] = useState(5);
 
+    const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+    const [uploading, setUploading] = useState(false);
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            setSelectedFiles(e.target.files);
+        }
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -23,13 +32,35 @@ const LocationAdd = () => {
 
         try {
             const res = await apiClient.post('/locations', data);
+
             if (res.status === 200 || res.status === 201) {
-                alert("Lokacija uspešno dodana!");
+                const newLocationId = res.data.id;
+                console.log("Lokacija ustvarjena, ID:", newLocationId);
+
+                // dodaj slike
+                if (selectedFiles && selectedFiles.length > 0) {
+                    const formData = new FormData();
+
+                    for (let i = 0; i < selectedFiles.length; i++) {
+                        formData.append('files', selectedFiles[i]);
+                    }
+
+                    await apiClient.post(`/locations/${newLocationId}/images`, formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    });
+                }
+
+                alert("Lokacija in slike uspešno dodane!");
                 navigate('/');
             }
         } catch (err) {
             console.error(err);
-            alert("Napaka pri dodajanju lokacije.");
+            const errorMsg = err.response?.data?.message || "Napaka pri dodajanju lokacije ali slik.";
+            alert(`Napaka: ${errorMsg}`);
+        } finally {
+            setUploading(false);
         }
     }
 
@@ -95,7 +126,30 @@ const LocationAdd = () => {
                                     <div className="text-center fw-bold">{rating}</div>
                                 </div>
 
-                                <button type="submit" className="btn btn-success w-100 py-2">Shrani lokacijo</button>
+                                <div className="mb-4">
+                                    <label htmlFor="formFileMultiple" className="form-label">Dodaj slike lokacije</label>
+                                    <input
+                                        className="form-control"
+                                        type="file"
+                                        id="formFileMultiple"
+                                        multiple
+                                        accept="image/png, image/jpeg, image/jpg"
+                                        onChange={handleFileChange}
+                                    />
+                                    <div className="form-text">Izberete lahko več slik hkrati (max 5MB na sliko).</div>
+                                </div>
+                                <button
+                                    type="submit"
+                                    className="btn btn-success w-100 py-2"
+                                    disabled={uploading}
+                                >
+                                    {uploading ? (
+                                        <span>
+                                            <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                            Shranjevanje...
+                                        </span>
+                                    ) : "Shrani lokacijo"}
+                                </button>
                             </form>
                         </div>
                     </div>
